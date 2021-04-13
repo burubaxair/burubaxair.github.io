@@ -124,6 +124,16 @@ function drawPoint(scaleX, scaleY, d, k) {
 
     context.arc(px, py, Math.sqrt(k), 0, 2 * Math.PI, true);
     context.fill();
+    if (k > 30){
+        let textSize = 10
+        context.font = `${textSize}px serif`;
+        let xtext = scaleX(d.diameter)+Math.floor(Math.sqrt(2*k));
+        let yText = scaleY(d.peakposition)+Math.floor(Math.sqrt(2*k));
+        context.fillText("d = "+Math.round(d.diameter*1000)/1000, xtext, yText)
+        context.fillText("E = "+Math.round(d.peakposition*1000)/1000, xtext, yText+textSize)
+        context.fillText("n = " + d.n + ", m = " + d.m, xtext, yText+2*textSize)
+    }
+    
 }
 
 // Zoom/Drag handler
