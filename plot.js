@@ -124,7 +124,7 @@ function drawPoint(scaleX, scaleY, d, k) {
 
     context.arc(px, py, Math.sqrt(k), 0, 2 * Math.PI, true);
     context.fill();
-    if (k > 30){
+    if (k > 18){
         let textSize = 10
         context.font = `${textSize}px serif`;
         let xtext = scaleX(d.diameter)+Math.floor(Math.sqrt(2*k));
