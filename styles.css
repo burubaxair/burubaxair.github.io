@@ -15,6 +15,21 @@
     visibility: hidden;
 }
 
+.tools form  { display: table;  }
+.tools p     { 
+  display: table-row;  
+}
+.tools label { 
+  display: table-cell;
+  margin-bottom: 5px;
+  margin-top: 5px; 
+}
+.tools input { 
+  display: table-cell; 
+  margin-bottom: 5px;
+  margin-top: 5px; 
+}
+
 .tools button {
     background-color: #e7e7e7;
     border: none;

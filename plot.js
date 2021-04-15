@@ -29,6 +29,8 @@ const svgChart = container.append('svg:svg')
                           .append('g')
                           .attr('transform', `translate(${margin.left}, ${margin.top})`);
 
+
+
 // Init Canvas
 const canvasChart = container.append('canvas')
                              .attr('width', width)
@@ -36,6 +38,9 @@ const canvasChart = container.append('canvas')
                              .style('margin-left', margin.left + 'px')
                              .style('margin-top', margin.top + 'px')
                              .attr('class', 'canvas-plot');
+
+
+
 
 // Prepare buttons
 const toolsList = container.select('.tools')
@@ -48,6 +53,7 @@ toolsList.select('#reset').on('click', () => {
                .duration(200)
                .ease(d3.easeLinear)
                .call(zoom_function.transform, t)
+               resetCentalLines()
 });
 
 const context = canvasChart.node().getContext('2d');
@@ -55,6 +61,29 @@ const context = canvasChart.node().getContext('2d');
 // Init Scales
 const x = d3.scaleLinear().domain([0, d3.max(dataExample, (d) => +d.diameter)+1]).range([0, width]);
 const y = d3.scaleLinear().domain([0, d3.max(dataExample, (d) => +d.peakposition)]).range([height, 0]).nice();
+
+const center_line_color = "chartreuse"  
+const meanDiameter = d3.max(dataExample, (d) => +d.diameter) /2
+const meanEnergy = d3.max(dataExample, (d) => +d.peakposition) /2
+
+function resetCentalLines(){
+    d3.select("#diameter").property("value",Math.round(meanDiameter*1000)/1000)
+    d3.select("#energy").property("value",Math.round(meanEnergy*1000)/1000)
+}
+
+resetCentalLines()
+
+toolsList.select('#zoom-coord').on('click', () => {
+    let scl = 40;
+    let xCenter = width/2-scl*x(d3.select("#diameter").property("value"))
+    let yCenter = height/2-scl*y(d3.select("#energy").property("value"))
+    const t = d3.zoomIdentity.translate(xCenter, yCenter).scale(scl);
+    canvasChart.transition()
+               .duration(200)
+               .ease(d3.easeLinear)
+               .call(zoom_function.transform, t)
+
+});
 
 // add the X gridlines
 svgChart.append("g")			
@@ -73,8 +102,7 @@ svgChart.append("g")
                             .tickFormat("")
              )
 
-
-// Init Axis
+             // Init Axis
 const xAxis = d3.axisBottom(x).ticks(10);
 const yAxis = d3.axisLeft(y).ticks(10);
 
@@ -107,14 +135,20 @@ function draw(transform) {
     gyAxis.call(yAxis.scale(scaleY));
 
     context.clearRect(0, 0, width, height);
+    d3.select("#centalVerticalLine").remove();
+    d3.select("#centalHorizontalLine").remove();
 
     dataExample.forEach(point => {
         drawPoint(scaleX, scaleY, point, transform.k);
     });
+    drawCentralLines(scaleX, scaleY);
 }
 
 // Initial draw made with no zoom
 draw(d3.zoomIdentity)
+
+
+
 
 function drawPoint(scaleX, scaleY, d, k) {
     context.beginPath();
@@ -136,8 +170,29 @@ function drawPoint(scaleX, scaleY, d, k) {
     
 }
 
+function drawCentralLines(scaleX, scaleY) {
+    svgChart.append("line")          
+             .style("stroke", center_line_color)
+            //  .style("stroke-dasharray", ("2, 2"))  
+             .attr("stroke-width", 2)
+             .attr("x1", scaleX(d3.select("#diameter").property("value")))     
+             .attr("y1", 2.5)      
+             .attr("x2", scaleX(d3.select("#diameter").property("value")))     
+             .attr("y2", height)
+             .attr("id", "centalVerticalLine");
+             
+    svgChart.append("line")          
+             .style("stroke", center_line_color)
+            //  .style("stroke-dasharray", ("2, 2"))
+             .attr("stroke-width", 2)  
+             .attr("x1", 0)     
+             .attr("y1", scaleY(d3.select("#energy").property("value")))      
+             .attr("x2", width)     
+             .attr("y2", scaleY(d3.select("#energy").property("value")))
+             .attr("id", "centalHorizontalLine");
+}
 // Zoom/Drag handler
-const zoom_function = d3.zoom().scaleExtent([1, 1000])
+const zoom_function = d3.zoom().scaleExtent([1, 500])
     .on('zoom', () => {
         const transform = d3.event.transform;
         context.save();
