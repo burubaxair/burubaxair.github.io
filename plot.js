@@ -5,7 +5,7 @@ https://medium.com/@xoor/brush-and-zoom-with-d3-js-and-canvas-71859cd28832
 https://www.coursera.org/learn/information-visualization-programming-d3js/
 */
 
-d3.csv("kataura.csv").then(function(dataExample){
+d3.csv("kataura_es.csv").then(function(dataExample){
     showData(dataExample)
 })
 
@@ -60,11 +60,11 @@ const context = canvasChart.node().getContext('2d');
 
 // Init Scales
 const x = d3.scaleLinear().domain([0, d3.max(dataExample, (d) => +d.diameter)+1]).range([0, width]);
-const y = d3.scaleLinear().domain([0, d3.max(dataExample, (d) => +d.peakposition)]).range([height, 0]).nice();
+const y = d3.scaleLinear().domain([0, d3.max(dataExample, (d) => +d.energy_separation)]).range([height, 0]).nice();
 
 const center_line_color = "chartreuse"  
 const meanDiameter = d3.max(dataExample, (d) => +d.diameter) /2
-const meanEnergy = d3.max(dataExample, (d) => +d.peakposition) /2
+const meanEnergy = d3.max(dataExample, (d) => +d.energy_separation) /2
 
 function resetCentalLines(){
     d3.select("#diameter").property("value",Math.round(meanDiameter*1000)/1000)
@@ -154,7 +154,7 @@ function drawPoint(scaleX, scaleY, d, k) {
     context.beginPath();
     context.fillStyle =  d.is_metal == 1 ? "orangered" : "dodgerblue"// pointColor;
     const px = scaleX(d.diameter);
-    const py = scaleY(d.peakposition);
+    const py = scaleY(d.energy_separation);
 
     context.arc(px, py, Math.sqrt(k), 0, 2 * Math.PI, true);
     context.fill();
@@ -162,9 +162,9 @@ function drawPoint(scaleX, scaleY, d, k) {
         let textSize = 10
         context.font = `${textSize}px serif`;
         let xtext = scaleX(d.diameter)+Math.floor(Math.sqrt(2*k));
-        let yText = scaleY(d.peakposition)+Math.floor(Math.sqrt(2*k));
+        let yText = scaleY(d.energy_separation)+Math.floor(Math.sqrt(2*k));
         context.fillText("d = "+Math.round(d.diameter*1000)/1000, xtext, yText)
-        context.fillText("E = "+Math.round(d.peakposition*1000)/1000, xtext, yText+textSize)
+        context.fillText("E = "+Math.round(d.energy_separation*1000)/1000, xtext, yText+textSize)
         context.fillText("n = " + d.n + ", m = " + d.m, xtext, yText+2*textSize)
     }
     
