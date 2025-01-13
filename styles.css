@@ -38,8 +38,8 @@ header .tagline {
 .profile-image {
   display: block;
   margin: 20px auto;
-  width: 192px;
-  height: 256px;
+  width: 144px;
+  height: 108px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
