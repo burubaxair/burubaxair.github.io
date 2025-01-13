@@ -93,6 +93,22 @@ footer {
   margin-top: 40px;
 }
 
+.email {
+  text-align: center;
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+
+.email a {
+  text-decoration: none;
+  color: #3498db; /* A nice blue color */
+  font-weight: 500;
+}
+
+.email a:hover {
+  text-decoration: underline;
+}
+
 footer p {
   margin: 0;
   font-size: 0.9rem;
