@@ -145,6 +145,16 @@ section ul li em {
   font-style: italic;
 }
 
+/* Nested List Styling */
+ul ul {
+    margin-left: 20px; /* Indents the nested list further */
+    list-style-type: circle; /* Changes bullet style for nested items */
+}
+
+ul ul li::before {
+    content: ""; /* Removes the "-" prefix for nested items if not desired */
+}
+
 /* Home Link Styling */
 .home-link-wrapper {
     text-align: center; /* Centers the link */
