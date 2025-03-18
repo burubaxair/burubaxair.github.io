@@ -148,7 +148,7 @@ section ul li em {
 /* Home Link Styling */
 .home-link {
     display: inline-block;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     margin: 5px 0;
     padding: 8px 15px;
     background-color: rgba(255, 255, 255, 0.1);
