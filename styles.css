@@ -128,3 +128,19 @@ footer p {
   margin: 0;
   font-size: 0.9rem;
 }
+
+/* Adjustments for CV page */
+h3 {
+  font-size: 1.3rem;
+  color: #34495e;
+  margin: 15px 0 5px;
+}
+
+section p {
+  margin: 5px 0;
+}
+
+section ul li em {
+  color: #555;
+  font-style: italic;
+}
