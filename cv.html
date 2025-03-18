@@ -98,10 +98,23 @@
         </section>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Vladislav Gladkikh. All rights reserved.</p>
-        </div>
-    </footer>
+    <p class="email">
+        <a id="email-link" href="#">Click to reveal email</a>
+      </p>
+      <script>
+        const email = "vlad" + "gladkikh" + "@" + "protonmail.ch";
+        document.getElementById("email-link").href = "mailto:" + email;
+        document.getElementById("email-link").textContent = email;
+       </script>
+    </section>
+    
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Vlad Gladkikh. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
